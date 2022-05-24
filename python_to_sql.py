@@ -26,7 +26,11 @@ class MySqlConnection:
             print(row)
             MySqlConnection.mycursor.execute("INSERT INTO emailid(Username, Loginemail, Identifier, Firstname, Lastname) VALUES (%s, %s, %s, %s, %s)",row)
             con.commit()
-            print(MySqlConnection.mycursor.rowcount, "record inserted.")      
+            MySqlConnection.mycursor.execute("SELECT * FROM emailid")
+            myresult = MySqlConnection.mycursor.fetchall()
+            print('Inserted records:\n')
+            for x in myresult:
+                print(x)      
                
     def close_connection(self):
         MySqlConnection.mycursor.close()
