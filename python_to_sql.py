@@ -13,9 +13,9 @@ class MySqlConnection:
         return  MY_DB
         
              
-    def import_csv(self,con):
+    def import_csv(self,conn):
         
-        MySqlConnection.mycursor = con.cursor() 
+        MySqlConnection.myCursor = conn.cursor() 
         csvData = csv.reader(open('/home/parag/Documents/practise/username_email.csv'))
         header = next(csvData)
         return csvData
@@ -24,19 +24,20 @@ class MySqlConnection:
     def write_csv_to_sql(self,csvData):
         for row in csvData:
             print(row)
-            MySqlConnection.mycursor.execute("INSERT INTO emailid(Username, Loginemail, Identifier, Firstname, Lastname) VALUES (%s, %s, %s, %s, %s)",row)
-            con.commit()
-            MySqlConnection.mycursor.execute("SELECT * FROM emailid")
-            myresult = MySqlConnection.mycursor.fetchall()
-            print('Inserted records:\n')
-            for x in myresult:
-                print(x)      
+            MySqlConnection.myCursor.execute("INSERT INTO emailid(Username, Loginemail, Identifier, Firstname, Lastname) VALUES (%s, %s, %s, %s, %s)",row)
+            conn.commit()
+        MySqlConnection.myCursor.execute("SELECT * FROM emailid")
+        database_result = MySqlConnection.myCursor.fetchall()
+        print('Inserted records:\n')
+        for x in database_result:
+            print(x)            
                
+                
     def close_connection(self):
-        MySqlConnection.mycursor.close()
+        MySqlConnection.myCursor.close()
             
-d1= MySqlConnection()
-con=d1.create_connection()
-csvData=d1.import_csv(con)
-d1.write_csv_to_sql(csvData)
-d1.close_connection()
+dbConnect= MySqlConnection()
+conn=dbConnect.create_connection()
+csvData=dbConnect.import_csv(conn)
+dbConnect.write_csv_to_sql(csvData)
+dbConnect.close_connection()
