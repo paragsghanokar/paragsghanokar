@@ -30,6 +30,7 @@ class MySqlConnection:
             print(row)
             CsvRead.myCursor.execute("INSERT INTO emailid(Username, Loginemail, Identifier, Firstname, Lastname) VALUES (%s, %s, %s, %s, %s)",row)
             con.commit()
+            
         CsvRead.myCursor.execute("SELECT * FROM emailid")
         database_result = CsvRead.myCursor.fetchall()
         print('Inserted records:\n')
