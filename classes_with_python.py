@@ -7,7 +7,7 @@ class CsvRead:
       
       def import_csv(self,con):
          
-        CsvRead.myCursor = con.cursor() 
+      
         csvData = csv.reader(open('/home/parag/Documents/practise/username_email.csv'))
         header = next(csvData)
         return csvData
@@ -27,6 +27,7 @@ class MySqlConnection:
         
 
     def write_csv_to_sql(self,csvData):
+        CsvRead.myCursor=con.cursor()
         for row in csvData:
             print(row)
             CsvRead.myCursor.execute("INSERT INTO emailid(Username, Loginemail, Identifier, Firstname, Lastname) VALUES (%s, %s, %s, %s, %s)",row)
