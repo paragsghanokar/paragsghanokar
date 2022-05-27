@@ -1,8 +1,21 @@
 import mysql.connector
 import csv
+
+
+class CsvRead:
+      
+      
+      def import_csv(self,con):
+         
+        CsvRead.myCursor = con.cursor() 
+        csvData = csv.reader(open('/home/parag/Documents/practise/username_email.csv'))
+        header = next(csvData)
+        return csvData
+
+
 class MySqlConnection:
-    
-    
+
+        
     def create_connection(self):
         MY_DB = mysql.connector.connect(
         host="localhost",
@@ -12,36 +25,27 @@ class MySqlConnection:
         )
         return  MY_DB
         
-        
-class ReadCsv:   
-    
-              
-    def import_csv(self,conn):
-        ReadCsv.myCursor = conn.cursor() 
-        csvData = csv.reader(open('/home/parag/Documents/practise/username_email.csv'))
-        header = next(csvData)
-        return csvData
-     
-         
+
     def write_csv_to_sql(self,csvData):
         for row in csvData:
             print(row)
-            ReadCsv.myCursor.execute("INSERT INTO emailid(Username, Loginemail, Identifier, Firstname, Lastname) VALUES (%s, %s, %s, %s, %s)",row)
-            conn.commit()
-        ReadCsv.myCursor.execute("SELECT * FROM emailid")
-        database_result = ReadCsv.myCursor.fetchall()
+            CsvRead.myCursor.execute("INSERT INTO emailid(Username, Loginemail, Identifier, Firstname, Lastname) VALUES (%s, %s, %s, %s, %s)",row)
+            con.commit()
+        CsvRead.myCursor.execute("SELECT * FROM emailid")
+        database_result = CsvRead.myCursor.fetchall()
         print('Inserted records:\n')
         for x in database_result:
-            print(x)            
-               
-               
+            print(x)
+    
+                
     def close_connection(self):
-        ReadCsv.myCursor.close()
+        CsvRead.myCursor.close()
+            
             
 dbConnect= MySqlConnection()
-rCsv=ReadCsv()
-conn=dbConnect.create_connection()
-csvData=rCsv.import_csv(conn)
-rCsv.write_csv_to_sql(csvData)
-rCsv.close_connection()
+rCsv=CsvRead()
+con=dbConnect.create_connection()
+csvData=rCsv.import_csv(con)
+dbConnect.write_csv_to_sql(csvData)
+dbConnect.close_connection()
 
