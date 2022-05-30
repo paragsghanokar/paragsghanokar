@@ -6,7 +6,7 @@ class CsvRead:
       
       
       def import_csv(self,con):
-        csvData = csv.reader(open('/home/parag/Documents/practise/username_email.csv'))
+        csvData = csv.reader(open('/home/parag/Documents/practise/usernamemail.csv'))
         next(csvData)
         return csvData
 
