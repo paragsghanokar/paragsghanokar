@@ -7,7 +7,7 @@ mydb = mysql.connector.connect(
   database="emaildb"
 )
 mycursor = mydb.cursor()
-csv_data = csv.reader(open('/home/parag/Documents/practise/username_email.csv'))
+csv_data = csv.reader(open('/home/parag/Documents/practise/usernamemail.csv'))
 header = next(csv_data)
 
 for row in csv_data:
