@@ -32,9 +32,9 @@ class MySqlConnection:
             con.commit()
             
         CsvRead.myCursor.execute("SELECT * FROM emailid")
-        databaseResult = CsvRead.myCursor.fetchall()
+        result = CsvRead.myCursor.fetchall()
         print('Inserted records:\n')
-        for x in databaseResult:
+        for x in result:
             print(x)
     
                 
