@@ -10,43 +10,42 @@ class CSVRead:
         return csv_data
 
 
-class MySqlExecution:
+class SqlExecution:
   
     def create_connection(self):
-        LOCAL_DB = mysql.connector.connect(
+        CONST_DB = mysql.connector.connect(
         host="localhost",
         user="root",
         password="Cmile@123",
         database="emaildb"
         )
-        return  LOCAL_DB
+        return  CONST_DB
         
     def write_csv_to_sql(self, csv_data):    
-        my_cursor=con.cursor()
+        db_cursor=con.cursor()
         for row in csv_data:
             print(row)
-            query_1 = "INSERT INTO emailid(Username, Loginemail, Identifier, Firstname, Lastname) VALUES (%s, %s, %s, %s, %s)"
-            my_cursor.execute(query_1,row)
+            first_query = "INSERT INTO emailid(Username, Loginemail, Identifier, Firstname, Lastname) VALUES (%s, %s, %s, %s, %s)"
+            db_cursor.execute(first_query,row)
             con.commit()
-        return myCursor
+        return db_cursor
         
-    def fetch_data_from_table(self, my_cursor):
-        query_2=("SELECT * FROM emailid")       
-        my_cursor.execute(query_2)
-        result = my_cursor.fetchall()
+    def display_data(self, db_cursor):
+        second_query=("SELECT * FROM emailid")       
+        db_cursor.execute(second_query)
+        result = db_cursor.fetchall()
         print('Inserted records:\n')
         for info in result:
             print(info)
               
     def close_connection(self):
-        myCursor.close()
+        db_cursor.close()
             
             
-dbConnect= MySqlExecution()
-rCSV=CSVRead()
-con=dbConnect.create_connection()
-csv_data=rCSV.import_csv()
-my_cursor=dbConnect.write_csv_to_sql(csv_data)
-dbConnect.fetch_data_from_table(my_cursor)
-dbConnect.close_connection()    
-
+db_connect= SqlExecution()
+r_csv=CSVRead()
+con=db_connect.create_connection()
+csv_data=r_csv.import_csv()
+db_cursor=db_connect.write_csv_to_sql(csv_data)
+db_connect.display_data(db_cursor)
+db_connect.close_connection()     
